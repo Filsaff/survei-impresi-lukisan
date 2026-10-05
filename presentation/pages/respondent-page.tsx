@@ -198,19 +198,20 @@ export function RespondentPage({
                     w-full
                     rounded-xl
                     border
-                    border-neutral-200/80
-                    bg-white/60
+                    border-white/70
+                    bg-white/40
                     px-4
                     text-sm
                     text-neutral-900
                     outline-none
-                    backdrop-blur-sm
-                    transition-all
+                    backdrop-blur-md
+                    shadow-[inset_0_1px_2px_rgba(255,255,255,0.85)]
+                    transition-colors
                     placeholder:text-neutral-400
-                    focus:border-red-900/30
-                    focus:bg-white/80
-                    focus:ring-4
-                    focus:ring-red-900/[0.06]
+                    focus:border-white
+                    focus:bg-white/65
+                    focus:ring-2
+                    focus:ring-red-900/10
                   "
                 />
               </label>
@@ -235,19 +236,20 @@ export function RespondentPage({
                     w-full
                     rounded-xl
                     border
-                    border-neutral-200/80
-                    bg-white/60
+                    border-white/70
+                    bg-white/40
                     px-4
                     text-sm
                     text-neutral-900
                     outline-none
-                    backdrop-blur-sm
-                    transition-all
+                    backdrop-blur-md
+                    shadow-[inset_0_1px_2px_rgba(255,255,255,0.85)]
+                    transition-colors
                     placeholder:text-neutral-400
-                    focus:border-red-900/30
-                    focus:bg-white/80
-                    focus:ring-4
-                    focus:ring-red-900/[0.06]
+                    focus:border-white
+                    focus:bg-white/65
+                    focus:ring-2
+                    focus:ring-red-900/10
                   "
                 />
               </label>
@@ -317,19 +319,20 @@ export function RespondentPage({
                       w-full
                       rounded-xl
                       border
-                      border-neutral-200/80
-                      bg-white/60
+                      border-white/70
+                      bg-white/40
                       px-4
                       text-sm
                       text-neutral-900
                       outline-none
-                      backdrop-blur-sm
-                      transition-all
+                      backdrop-blur-md
+                      shadow-[inset_0_1px_2px_rgba(255,255,255,0.85)]
+                      transition-colors
                       placeholder:text-neutral-400
-                      focus:border-red-900/30
-                      focus:bg-white/80
-                      focus:ring-4
-                      focus:ring-red-900/[0.06]
+                      focus:border-white
+                      focus:bg-white/65
+                      focus:ring-2
+                      focus:ring-red-900/10
                     "
                   />
                 </label>
@@ -357,18 +360,19 @@ export function RespondentPage({
                     w-full
                     rounded-xl
                     border
-                    border-neutral-200/80
-                    bg-white/60
+                    border-white/70
+                    bg-white/40
                     px-4
                     text-sm
                     text-neutral-900
                     outline-none
-                    backdrop-blur-sm
-                    transition-all
-                    focus:border-red-900/30
-                    focus:bg-white/80
-                    focus:ring-4
-                    focus:ring-red-900/[0.06]
+                    backdrop-blur-md
+                    shadow-[inset_0_1px_2px_rgba(255,255,255,0.85)]
+                    transition-colors
+                    focus:border-white
+                    focus:bg-white/65
+                    focus:ring-2
+                    focus:ring-red-900/10
                   "
                 >
                   <option value="">

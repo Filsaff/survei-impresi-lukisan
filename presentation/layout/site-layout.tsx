@@ -19,26 +19,30 @@ export function SiteHeader({
 
   useEffect(() => {
     let lastScrollY = window.scrollY
+    let ticking = false
 
     const handleScroll = () => {
-      const currentScrollY = window.scrollY
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY
 
-      if (currentScrollY <= 20) {
-        setAtTop(true)
-        setVisible(true)
-        lastScrollY = currentScrollY
-        return
+          if (currentScrollY <= 20) {
+            setAtTop(true)
+            setVisible(true)
+          } else {
+            setAtTop(false)
+            if (currentScrollY > lastScrollY) {
+              setVisible(false)
+            } else if (currentScrollY < lastScrollY) {
+              setVisible(true)
+            }
+          }
+
+          lastScrollY = currentScrollY
+          ticking = false
+        })
+        ticking = true
       }
-
-      setAtTop(false)
-
-      if (currentScrollY > lastScrollY) {
-        setVisible(false)
-      } else if (currentScrollY < lastScrollY) {
-        setVisible(true)
-      }
-
-      lastScrollY = currentScrollY
     }
 
     window.addEventListener('scroll', handleScroll, {
@@ -54,7 +58,7 @@ export function SiteHeader({
     <header
       className={`
         fixed inset-x-0 top-4 z-50
-        transition-all duration-500 ease-out
+        transition-transform duration-300 ease-out
         ${
           visible
             ? 'translate-y-0'
@@ -69,7 +73,7 @@ export function SiteHeader({
           gap-6
           rounded-full
           px-3 pl-5
-          transition-all duration-500
+          transition-colors duration-200
 
           ${
             atTop

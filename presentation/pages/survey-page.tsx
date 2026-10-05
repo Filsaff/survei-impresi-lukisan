@@ -22,7 +22,7 @@ import { PageShell } from '@/presentation/layout/site-layout'
 import { Button } from '@/components/ui/button'
 import BrushStrokes from '@/components/decorations/brush-strokes'
 
-export function SurveyPage({
+export const SurveyPage = React.memo(function SurveyPage({
   current,
   total,
   painting,
@@ -41,27 +41,30 @@ export function SurveyPage({
 }) {
   const [query, setQuery] = React.useState('')
 
-  const allImpressions =
-    surveyRepository.getImpressions()
-  
+  const allImpressions = React.useMemo(
+    () => surveyRepository.getImpressions(),
+    [],
+  )
+
   const [showTip, setShowTip] = React.useState(false)
 
-    React.useEffect(() => {
-      if (!showTip) return
-    
-      const timer = window.setTimeout(() => {
-        setShowTip(false)
-      }, 4000)
-    
-      return () => window.clearTimeout(timer)
-    }, [showTip])
+  React.useEffect(() => {
+    if (!showTip) return
 
-  const impressions =
-    allImpressions.filter((impression) =>
-      impression.name
-        .toLowerCase()
-        .includes(query.toLowerCase()),
+    const timer = window.setTimeout(() => {
+      setShowTip(false)
+    }, 4000)
+
+    return () => window.clearTimeout(timer)
+  }, [showTip])
+
+  const impressions = React.useMemo(() => {
+    if (!query.trim()) return allImpressions
+    const lower = query.toLowerCase()
+    return allImpressions.filter((impression) =>
+      impression.name.toLowerCase().includes(lower),
     )
+  }, [allImpressions, query])
 
   const progress =
     (current / total) * 100
@@ -177,7 +180,7 @@ export function SurveyPage({
           {/* Painting */}
           <section className="flex flex-col items-center">
 
-            <div
+          <div
               className="
                 group
                 relative
@@ -205,8 +208,7 @@ export function SurveyPage({
                 hover:shadow-[0_28px_70px_rgba(0,0,0,0.10),inset_0_1px_3px_rgba(255,255,255,1)]
               "
             >
-
-              {/* Glass shine */}
+              {/* Glass reflective shine */}
               <span
                 aria-hidden="true"
                 className="
@@ -226,7 +228,7 @@ export function SurveyPage({
                 "
               />
 
-              <div
+<div
                 className="
                   relative
                   overflow-hidden
@@ -237,13 +239,16 @@ export function SurveyPage({
                 <img
                   src={painting.image}
                   alt={painting.title}
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                   className="
                     block
                     aspect-[4/3]
                     w-full
                     object-contain
                     transition-transform
-                    duration-700
+                    duration-300
                     group-hover:scale-[1.015]
                   "
                 />
@@ -280,7 +285,6 @@ export function SurveyPage({
             </div>
           </section>
 
-          {/* Question */}
           <section
             className="
               group
@@ -308,9 +312,8 @@ export function SurveyPage({
               hover:shadow-[0_28px_70px_rgba(0,0,0,0.08),inset_0_1px_3px_rgba(255,255,255,1)]
             "
           >
-
-            {/* Glass shine */}
-            <span
+           {/* Glass shine */}
+           <span
               aria-hidden="true"
               className="
                 pointer-events-none
@@ -603,7 +606,7 @@ export function SurveyPage({
                   "
                 />
 
-                {query && (
+{query && (
                   <button
                     type="button"
                     onClick={() => setQuery('')}
@@ -638,36 +641,36 @@ export function SurveyPage({
                         onToggle(impression.id)
                       }
                       className={`
-                        rounded-full
-                        border
-                        px-3.5
-                        py-2
-                        text-sm
-                        font-medium
-                        transition-all
-                        duration-200
+                      rounded-full
+                      border
+                      px-3.5
+                      py-2
+                      text-sm
+                      font-medium
+                      transition-all
+                      duration-200
 
                         ${
                           isSelected
-                            ? `
-                              border-red-900/30
-                              bg-red-900
-                              text-white
-                              shadow-[0_5px_15px_rgba(127,29,29,0.15)]
-                            `
-                            : `
-                              border-white/80
-                              bg-white/[0.42]
-                              text-neutral-600
-                              backdrop-blur-sm
-                              hover:-translate-y-0.5
-                              hover:bg-white/[0.70]
-                              hover:text-neutral-900
-                            `
-                        }
+                          ? `
+                          border-red-900/30
+                          bg-red-900
+                          text-white
+                          shadow-[0_5px_15px_rgba(127,29,29,0.15)]
+                        `
+                        : `
+                          border-white/80
+                          bg-white/[0.42]
+                          text-neutral-600
+                          backdrop-blur-sm
+                          hover:-translate-y-0.5
+                          hover:bg-white/[0.70]
+                          hover:text-neutral-900
+                        `
+                    }
 
-                        active:scale-95
-                      `}
+                    active:scale-95
+                  `}
                     >
                       {impression.name}
                     </button>
@@ -759,7 +762,7 @@ export function SurveyPage({
       </main>
     </PageShell>
   )
-}
+})
 
 export function ConfirmationDialog({
   onBack,

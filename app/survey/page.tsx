@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  useCallback,
   useEffect,
   useState,
 } from 'react'
@@ -119,6 +120,67 @@ export default function Page() {
     router,
   ])
 
+  // 1. Preload 3 lukisan berikutnya agar saat klik 'Next' gambar langsung muncul tanpa loading
+  useEffect(() => {
+    if (!session?.survey?.paintings) return
+
+    const nextPaintings = session.survey.paintings.filter(
+      (item) => item.position > currentPainting && item.position <= currentPainting + 3,
+    )
+
+    nextPaintings.forEach((item) => {
+      if (item.image) {
+        const img = new window.Image()
+        img.src = item.image
+      }
+    })
+  }, [currentPainting, session?.survey?.paintings])
+
+  // 2. Preload seluruh lukisan di background saat browser idle
+  useEffect(() => {
+    if (!session?.survey?.paintings) return
+
+    const preloadAll = () => {
+      session.survey.paintings.forEach((item) => {
+        if (item.image) {
+          const img = new window.Image()
+          img.src = item.image
+        }
+      })
+    }
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      const handle = (window as any).requestIdleCallback(preloadAll, { timeout: 3000 })
+      return () => (window as any).cancelIdleCallback(handle)
+    } else {
+      const timer = setTimeout(preloadAll, 1200)
+      return () => clearTimeout(timer)
+    }
+  }, [session?.survey?.paintings])
+
+  const handleFinish = useCallback(() => {
+    if (!session) return
+    const isLastPainting =
+      currentPainting ===
+      session.survey.totalPaintings
+
+    if (isLastPainting) {
+      setConfirming(true)
+      return
+    }
+
+    goNext()
+  }, [currentPainting, goNext, session])
+
+  const handleBack = useCallback(() => {
+    if (currentPainting > 1) {
+      goPrevious()
+      return
+    }
+
+    router.push('/respondent')
+  }, [currentPainting, goPrevious, router])
+
   if (!hydrated) {
     return null
   }
@@ -143,34 +205,6 @@ export default function Page() {
       painting.id,
     )
 
-  const handleFinish = () => {
-    const isLastPainting =
-      currentPainting ===
-      session.survey.totalPaintings
-
-    if (isLastPainting) {
-      setConfirming(true)
-
-      return
-    }
-
-    goNext()
-  }
-
-  const handleBack = () => {
-    if (
-      currentPainting > 1
-    ) {
-      goPrevious()
-
-      return
-    }
-
-    router.push(
-      '/respondent',
-    )
-  }
-
   return (
     <>
       <SurveyPage
@@ -182,9 +216,7 @@ export default function Page() {
         }
         painting={painting}
         selected={selected}
-        onToggle={(
-          impressionId,
-        ) =>
+        onToggle={(impressionId) =>
           toggleImpression(
             painting.id,
             impressionId,
