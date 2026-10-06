@@ -18,6 +18,10 @@ import {
 } from '@/data/survey-repository'
 
 import {
+  startSurveyUseCase,
+} from '@/application/use-cases/start-survey'
+
+import {
   RespondentPage,
 } from '@/presentation/pages/respondent-page'
 
@@ -43,7 +47,8 @@ export default function Page() {
 
   const handleStart = async () => {
     const session =
-      await surveyRepository.startSurvey(
+      await startSurveyUseCase(
+        surveyRepository,
         respondent,
       )
 

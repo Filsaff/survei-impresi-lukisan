@@ -19,9 +19,7 @@ export function ThankYouPage() {
             h-[420px] w-[420px]
             -translate-x-1/2 -translate-y-1/2
             rounded-full
-            bg-[var(--accent)]
-            opacity-[0.035]
-            blur-3xl
+            bg-[radial-gradient(ellipse_at_center,rgba(153,27,27,0.035)_0%,transparent_70%)]
           "
         />
 

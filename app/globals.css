@@ -370,8 +370,6 @@ a:focus-visible,
     stroke: rgba(153, 27, 27, 0.14);
     stroke-width: 3;
     stroke-linecap: round;
-  
-    animation: brushFloat 14s ease-in-out infinite;
   }
   
   .brush-strokes-left {
@@ -386,27 +384,16 @@ a:focus-visible,
     bottom: 2%;
   
     transform: rotate(8deg);
-  
-    animation-delay: -7s;
   }
-  
-  @keyframes brushFloat {
-    0%,
-    100% {
-      transform:
-        translate3d(0, 0, 0)
-        rotate(-8deg);
-    }
-  
-    50% {
-      transform:
-        translate3d(60px, -25px, 0)
-        rotate(-5deg);
-    }
+
+  .brush-strokes-animated {
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    animation: brushFloat 14s ease-in-out infinite;
   }
-  .brush-strokes-right {
-    right: -400px;
-    bottom: 2%;
+
+  .brush-strokes-animated.brush-strokes-right {
     animation-delay: -7s;
   }
   
@@ -719,8 +706,7 @@ a:focus-visible,
 .overlay {
     position: fixed;
     inset: 0;
-    background: #ffffffaa;
-    backdrop-filter: blur(8px);
+    background: #00000040;
     display: grid;
     place-items: center;
     z-index: 5

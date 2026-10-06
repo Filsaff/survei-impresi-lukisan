@@ -1,6 +1,12 @@
 "use client";
 
-export function BrushStrokes() {
+import { cn } from "@/lib/utils";
+
+export interface BrushStrokesProps {
+  animated?: boolean;
+}
+
+export function BrushStrokes({ animated = false }: BrushStrokesProps) {
   return (
     <div
       className="
@@ -14,7 +20,10 @@ export function BrushStrokes() {
     >
       {/* Left brush strokes */}
       <svg
-        className="brush-strokes brush-strokes-left"
+        className={cn(
+          "brush-strokes brush-strokes-left",
+          animated && "brush-strokes-animated"
+        )}
         viewBox="0 0 800 600"
         fill="none"
       >
@@ -29,7 +38,10 @@ export function BrushStrokes() {
 
       {/* Right brush strokes */}
       <svg
-        className="brush-strokes brush-strokes-right"
+        className={cn(
+          "brush-strokes brush-strokes-right",
+          animated && "brush-strokes-animated"
+        )}
         viewBox="0 0 800 600"
         fill="none"
       >

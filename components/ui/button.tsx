@@ -80,9 +80,8 @@ const buttonVariants = cva(
         
           // Black glass surface
           'border border-white/20',
-          'bg-black/[0.55]',
+          'bg-neutral-900/90',
           'text-white',
-          'backdrop-blur-xl',
         
           // Glass depth
           'shadow-[0_8px_30px_rgba(0,0,0,0.18),inset_0_1px_2px_rgba(255,255,255,0.35),inset_0_-1px_2px_rgba(0,0,0,0.15)]',
@@ -91,7 +90,7 @@ const buttonVariants = cva(
         
           // Hover
           'hover:-translate-y-0.5',
-          'hover:bg-black/[0.68]',
+          'hover:bg-neutral-900/95',
           'hover:border-white/30',
           'hover:shadow-[0_14px_35px_rgba(0,0,0,0.25),inset_0_1px_3px_rgba(255,255,255,0.45)]',
         
@@ -110,14 +109,13 @@ const buttonVariants = cva(
           'rounded-full',
 
           'border-white/30',
-          'bg-red-900/[0.90]',
+          'bg-red-900/95',
           'text-white',
 
-          'backdrop-blur-[5px]',
           'shadow-[0_12px_35px_rgba(127,29,29,0.20),inset_0_1px_2px_rgba(255,255,255,0.35)]',
 
           'hover:-translate-y-1',
-          'hover:bg-red-800/[0.92]',
+          'hover:bg-red-800/95',
 
           'hover:shadow-[0_18px_45px_rgba(127,29,29,0.25),inset_0_1px_3px_rgba(255,255,255,0.45)]',
 
@@ -133,10 +131,9 @@ const buttonVariants = cva(
           'border border-white/30',
           'justify-center',
         
-          'bg-red-900/[0.90]',
+          'bg-red-900/95',
           'text-white',
         
-          'backdrop-blur-[5px]',
           'px-4 py-5',
           'sm:px-4 sm:py-6',
           'md:px-16 md:py-8',
@@ -146,7 +143,7 @@ const buttonVariants = cva(
           'transition-all duration-300',
         
           'hover:-translate-y-1',
-          'hover:bg-red-800/[0.92]',
+          'hover:bg-red-800/95',
         
           'hover:shadow-[0_18px_45px_rgba(127,29,29,0.25),inset_0_1px_3px_rgba(255,255,255,0.45)]',
         
@@ -278,38 +275,36 @@ function Button({
       {...props}
     >
       {isGlass && (
-  <span
-    aria-hidden="true"
-    className="
-      pointer-events-none
-      absolute
-      inset-0
-      overflow-hidden
-      rounded-[inherit]
-    "
-  >
-    <span
-      className="
-        absolute
-        inset-[-100%]
-
-        rotate-12
-
-        bg-gradient-to-r
-        from-transparent
-        via-white/30
-        to-transparent
-
-        translate-x-[-100%]
-
-        transition-transform
-        duration-700
-
-        group-hover/button:translate-x-[100%]
-      "
-    />
-  </span>
-)}
+        <span
+          aria-hidden="true"
+          className="
+            pointer-events-none
+            absolute
+            inset-0
+            overflow-hidden
+            rounded-[inherit]
+          "
+        >
+          <span
+            className="
+              absolute
+              -inset-y-8
+              left-0
+              w-full
+              rotate-12
+              bg-gradient-to-r
+              from-transparent
+              via-white/30
+              to-transparent
+              translate-x-[-150%]
+              transition-transform
+              duration-1000
+              ease-out
+              group-hover/button:translate-x-[150%]
+            "
+          />
+        </span>
+      )}
       <span className="relative z-10 inline-flex items-center justify-center gap-2">
         {children}
       </span>

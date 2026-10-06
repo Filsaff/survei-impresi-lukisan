@@ -22,7 +22,7 @@ export function HomePage() {
   return (
     <PageShell active="home">
       <main className="relative min-h-screen overflow-hidden bg-white">
-        <BrushStrokes />
+        <BrushStrokes animated />
 
         <section className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 py-24 pt-32 text-center">
 
@@ -107,8 +107,7 @@ export function HomePage() {
                 -translate-x-1/2
                 -translate-y-1/2
                 rounded-full
-                bg-red-800/[0.08]
-                blur-3xl
+                bg-[radial-gradient(ellipse_at_center,rgba(153,27,27,0.06)_0%,transparent_70%)]
               "
             />
 
@@ -136,15 +135,14 @@ export function HomePage() {
                   rounded-2xl
                   border
                   border-white/60
-                  bg-white/[0.18]
+                  bg-white/70
                   p-6
                   text-left
-                  backdrop-blur-[8px]
-                  shadow-[0_12px_40px_rgba(0,0,0,0.06),inset_0_1px_2px_rgba(255,255,255,0.9)]
+                  shadow-[0_12px_40px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,0.9)]
                   transition-all
                   duration-500
                   hover:-translate-y-1
-                  hover:bg-white/[0.24]
+                  hover:bg-white/85
                   hover:shadow-[0_20px_50px_rgba(0,0,0,0.08),inset_0_1px_3px_rgba(255,255,255,1)]
                   active:scale-[0.98]
                 "
@@ -172,8 +170,10 @@ export function HomePage() {
                     right-[10%]
                     top-0
                     h-px
-                    bg-white/90
-                    blur-[0.5px]
+                    bg-gradient-to-r
+                    from-transparent
+                    via-white/90
+                    to-transparent
                   "
                 />
 
@@ -189,15 +189,14 @@ export function HomePage() {
                     justify-center
                     rounded-full
                     border
-                    border-white/70
-                    bg-white/[0.20]
+                    border-white/80
+                    bg-white/70
                     text-red-800
-                    backdrop-blur-[5px]
                     shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)]
                     transition-all
                     duration-500
                     group-hover:scale-105
-                    group-hover:bg-white/[0.30]
+                    group-hover:bg-white/90
                   "
                 >
                   <Clock3 size={24} />
@@ -240,15 +239,14 @@ export function HomePage() {
                   rounded-2xl
                   border
                   border-white/60
-                  bg-white/[0.18]
+                  bg-white/70
                   p-6
                   text-left
-                  backdrop-blur-[8px]
-                  shadow-[0_12px_40px_rgba(0,0,0,0.06),inset_0_1px_2px_rgba(255,255,255,0.9)]
+                  shadow-[0_12px_40px_rgba(0,0,0,0.05),inset_0_1px_2px_rgba(255,255,255,0.9)]
                   transition-all
                   duration-500
                   hover:-translate-y-1
-                  hover:bg-white/[0.24]
+                  hover:bg-white/85
                   hover:shadow-[0_20px_50px_rgba(0,0,0,0.08),inset_0_1px_3px_rgba(255,255,255,1)]
                   active:scale-[0.98]
                 "
@@ -276,8 +274,10 @@ export function HomePage() {
                     right-[10%]
                     top-0
                     h-px
-                    bg-white/90
-                    blur-[0.5px]
+                    bg-gradient-to-r
+                    from-transparent
+                    via-white/90
+                    to-transparent
                   "
                 />
 
@@ -293,15 +293,14 @@ export function HomePage() {
                     justify-center
                     rounded-full
                     border
-                    border-white/70
-                    bg-white/[0.20]
+                    border-white/80
+                    bg-white/70
                     text-red-800
-                    backdrop-blur-[5px]
                     shadow-[inset_0_1px_2px_rgba(255,255,255,0.9)]
                     transition-all
                     duration-500
                     group-hover:scale-105
-                    group-hover:bg-white/[0.30]
+                    group-hover:bg-white/90
                   "
                 >
                   <Layers3 size={24} />

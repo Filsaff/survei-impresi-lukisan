@@ -19,6 +19,9 @@ import {
   useSurveyStore,
 } from '@/presentation/stores/survey-store'
 
+import { surveyRepository } from '@/data/survey-repository'
+import { submitSurveyUseCase } from '@/application/use-cases/submit-survey'
+
 export default function Page() {
   const router = useRouter()
 
@@ -80,20 +83,7 @@ export default function Page() {
     setSubmitError(null)
 
     try {
-      const response = await fetch('/api/survey', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(session),
-      })
-
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Gagal menyimpan data survei.')
-      }
-
+      await submitSurveyUseCase(surveyRepository, session)
       clearProgress()
       router.push('/thank-you')
     } catch (err: any) {
@@ -120,43 +110,19 @@ export default function Page() {
     router,
   ])
 
-  // 1. Preload 3 lukisan berikutnya agar saat klik 'Next' gambar langsung muncul tanpa loading
+  // Preload 1 lukisan berikutnya secara bertahap agar saat klik 'Next' langsung muncul tanpa lag
   useEffect(() => {
     if (!session?.survey?.paintings) return
 
-    const nextPaintings = session.survey.paintings.filter(
-      (item) => item.position > currentPainting && item.position <= currentPainting + 3,
+    const nextPainting = session.survey.paintings.find(
+      (item) => item.position === currentPainting + 1,
     )
 
-    nextPaintings.forEach((item) => {
-      if (item.image) {
-        const img = new window.Image()
-        img.src = item.image
-      }
-    })
+    if (nextPainting?.image) {
+      const img = new window.Image()
+      img.src = nextPainting.image
+    }
   }, [currentPainting, session?.survey?.paintings])
-
-  // 2. Preload seluruh lukisan di background saat browser idle
-  useEffect(() => {
-    if (!session?.survey?.paintings) return
-
-    const preloadAll = () => {
-      session.survey.paintings.forEach((item) => {
-        if (item.image) {
-          const img = new window.Image()
-          img.src = item.image
-        }
-      })
-    }
-
-    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
-      const handle = (window as any).requestIdleCallback(preloadAll, { timeout: 3000 })
-      return () => (window as any).cancelIdleCallback(handle)
-    } else {
-      const timer = setTimeout(preloadAll, 1200)
-      return () => clearTimeout(timer)
-    }
-  }, [session?.survey?.paintings])
 
   const handleFinish = useCallback(() => {
     if (!session) return
@@ -180,6 +146,19 @@ export default function Page() {
 
     router.push('/respondent')
   }, [currentPainting, goPrevious, router])
+
+  const currentPaintingId = session?.survey?.paintings.find(
+    (item) => item.position === currentPainting,
+  )?.id
+
+  const handleToggle = useCallback(
+    (impressionId: string) => {
+      if (currentPaintingId) {
+        toggleImpression(currentPaintingId, impressionId)
+      }
+    },
+    [currentPaintingId, toggleImpression],
+  )
 
   if (!hydrated) {
     return null
@@ -216,12 +195,7 @@ export default function Page() {
         }
         painting={painting}
         selected={selected}
-        onToggle={(impressionId) =>
-          toggleImpression(
-            painting.id,
-            impressionId,
-          )
-        }
+        onToggle={handleToggle}
         onBack={
           handleBack
         }

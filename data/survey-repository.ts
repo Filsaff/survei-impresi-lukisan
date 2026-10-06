@@ -6,12 +6,13 @@ import {
 } from '@/data/mock-survey'
 
 import type {
+  ISurveyRepository,
   Respondent,
-  SurveyAnswer,
   SurveySession,
+  SurveySubmissionResult,
 } from '@/domain/survey'
 
-export const surveyRepository = {
+export const surveyRepository: ISurveyRepository = {
   getSurvey: () => mockSurvey,
 
   getPaintings: () => mockSurvey.paintings,
@@ -55,6 +56,29 @@ export const surveyRepository = {
       },
 
       answers: [],
+    }
+  },
+
+  submitSurvey: async (
+    session: SurveySession,
+  ): Promise<SurveySubmissionResult> => {
+    const response = await fetch('/api/survey', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(session),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Gagal menyimpan data survei.')
+    }
+
+    return {
+      success: true,
+      respondentId: data.respondentId,
     }
   },
 }

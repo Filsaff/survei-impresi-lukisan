@@ -9,7 +9,7 @@ export type Respondent = {
   email: string
   age?: number
   gender?: 'Laki-laki' | 'Perempuan'
-  education?: 'SD' | 'SMP' | 'SMA' | 'D3' | 'S1' | 'S2' | 'S3'
+  education?: 'SD' | 'SMP' | 'SMA' | 'SMA / sederajat' | 'D3' | 'S1' | 'S2' | 'S3' | 'S2 / S3'
 }
 
 export const emptyRespondent: Respondent = {
@@ -41,6 +41,20 @@ export type SurveySession = {
   respondent: Respondent
   survey: Survey
   answers: SurveyAnswer[]
+}
+
+export type SurveySubmissionResult = {
+  success: boolean
+  respondentId: string
+}
+
+export interface ISurveyRepository {
+  getSurvey(): Survey
+  getPaintings(): SurveyPainting[]
+  getPainting(position: number): SurveyPainting | undefined
+  getImpressions(): Impression[]
+  startSurvey(respondent: Respondent): Promise<SurveySession>
+  submitSurvey(session: SurveySession): Promise<SurveySubmissionResult>
 }
 
 export function isRespondentValid(
