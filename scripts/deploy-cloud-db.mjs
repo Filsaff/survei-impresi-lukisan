@@ -33,8 +33,10 @@ if (!dbUrl) {
   process.exit(1);
 }
 
+const cleanDbUrl = dbUrl.replace(/[?&]sslmode=[^&]+/g, '').replace(/\?$/, '');
+
 const pool = new Pool({
-  connectionString: dbUrl,
+  connectionString: cleanDbUrl,
   ssl: { rejectUnauthorized: false },
 });
 

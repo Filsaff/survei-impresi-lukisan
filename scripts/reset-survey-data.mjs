@@ -30,8 +30,10 @@ const isSsl =
   dbUrl?.includes('supabase') ||
   dbUrl?.includes('sslmode=require');
 
+const cleanDbUrl = dbUrl ? dbUrl.replace(/[?&]sslmode=[^&]+/g, '').replace(/\?$/, '') : dbUrl;
+
 const pool = new Pool({
-  connectionString: dbUrl,
+  connectionString: cleanDbUrl,
   ssl: isSsl ? { rejectUnauthorized: false } : undefined,
 });
 

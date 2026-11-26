@@ -9,11 +9,17 @@ export function getPool(): Pool {
     return globalForPg.pgPool
   }
 
-  const connectionString = process.env.DATABASE_URL
+  const rawConnectionString = process.env.DATABASE_URL
   const isSsl =
-    connectionString?.includes('rds.amazonaws.com') ||
-    connectionString?.includes('supabase') ||
-    connectionString?.includes('sslmode=require')
+    rawConnectionString?.includes('rds.amazonaws.com') ||
+    rawConnectionString?.includes('supabase') ||
+    rawConnectionString?.includes('sslmode=require') ||
+    rawConnectionString?.includes('neon.tech')
+
+  // Clean connection string to prevent pg-connection-string from overriding rejectUnauthorized: false
+  const connectionString = rawConnectionString
+    ? rawConnectionString.replace(/[?&]sslmode=[^&]+/g, '').replace(/\?$/, '')
+    : rawConnectionString
 
   const poolInstance = new Pool({
     connectionString,
