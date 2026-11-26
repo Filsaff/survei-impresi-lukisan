@@ -2,19 +2,38 @@ import fs from 'fs';
 import path from 'path';
 import { Pool } from 'pg';
 
-const envContent = fs.readFileSync('.env.local', 'utf-8');
-let dbUrl = '';
-for (const line of envContent.split('\n')) {
-  const idx = line.indexOf('=');
-  if (idx > -1 && line.slice(0, idx).trim() === 'DATABASE_URL') {
-    dbUrl = line.slice(idx + 1).trim();
-    if ((dbUrl.startsWith('"') && dbUrl.endsWith('"')) || (dbUrl.startsWith("'") && dbUrl.endsWith("'"))) {
-      dbUrl = dbUrl.slice(1, -1);
+// Parse command line arguments: e.g. --db="postgresql://..."
+const args = Object.fromEntries(
+  process.argv.slice(2).map((arg) => {
+    const [k, v] = arg.replace(/^--/, '').split('=');
+    return [k, v];
+  })
+);
+
+let dbUrl = args.db;
+
+if (!dbUrl && fs.existsSync('.env.local')) {
+  const envContent = fs.readFileSync('.env.local', 'utf-8');
+  for (const line of envContent.split('\n')) {
+    const idx = line.indexOf('=');
+    if (idx > -1 && line.slice(0, idx).trim() === 'DATABASE_URL') {
+      dbUrl = line.slice(idx + 1).trim();
+      if ((dbUrl.startsWith('"') && dbUrl.endsWith('"')) || (dbUrl.startsWith("'") && dbUrl.endsWith("'"))) {
+        dbUrl = dbUrl.slice(1, -1);
+      }
     }
   }
 }
 
-const pool = new Pool({ connectionString: dbUrl });
+const isSsl =
+  dbUrl?.includes('rds.amazonaws.com') ||
+  dbUrl?.includes('supabase') ||
+  dbUrl?.includes('sslmode=require');
+
+const pool = new Pool({
+  connectionString: dbUrl,
+  ssl: isSsl ? { rejectUnauthorized: false } : undefined,
+});
 
 async function resetDatabase() {
   console.log('======================================================');

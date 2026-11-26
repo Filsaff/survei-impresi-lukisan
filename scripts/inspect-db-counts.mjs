@@ -13,7 +13,15 @@ for (const line of envContent.split('\n')) {
   }
 }
 
-const pool = new Pool({ connectionString: dbUrl });
+const isSsl =
+  dbUrl.includes('rds.amazonaws.com') ||
+  dbUrl.includes('supabase') ||
+  dbUrl.includes('sslmode=require');
+
+const pool = new Pool({
+  connectionString: dbUrl,
+  ssl: isSsl ? { rejectUnauthorized: false } : undefined,
+});
 
 async function inspect() {
   const tables = [
