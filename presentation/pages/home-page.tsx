@@ -2,6 +2,7 @@
 
 import {
   ArrowRight,
+  BookOpen,
   Clock3,
   Layers3,
   LockKeyhole,
@@ -9,6 +10,7 @@ import {
 
 import { PageShell } from "@/presentation/layout/site-layout";
 import { useSurveyNavigation } from "@/presentation/navigation/use-survey-navigation";
+import { ImpressionGlossarySection } from "@/presentation/components/glossary";
 
 import SplitText from "@/components/react-bits/split-text";
 import AnimatedContent from "@/components/react-bits/animated-content";
@@ -21,10 +23,12 @@ export function HomePage() {
 
   return (
     <PageShell active="home">
-      <main className="relative min-h-screen overflow-hidden bg-white">
-        <BrushStrokes animated />
+      <main className="relative min-h-screen bg-white">
+        {/* Landing Page Hero Container: BrushStrokes strictly contained in hero only */}
+        <div className="relative min-h-screen overflow-hidden bg-white">
+          <BrushStrokes animated />
 
-        <section className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 py-24 pt-32 text-center">
+          <section className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-6 py-24 pt-32 text-center">
 
           {/* Eyebrow */}
           <AnimatedContent
@@ -42,7 +46,7 @@ export function HomePage() {
               <span className="h-px w-8 bg-red-900/30" />
 
               <p className="text-xs font-semibold tracking-[0.25em] text-red-800">
-                STUDI PENELITIAN BUDAYA
+                STUDI PENELITIAN
               </p>
 
               <span className="h-px w-8 bg-red-900/30" />
@@ -84,10 +88,10 @@ export function HomePage() {
             threshold={0.1}
           >
             <p className="mt-8 max-w-3xl text-base leading-8 text-neutral-500 md:text-lg">
-              Kami mengundang Anda untuk berpartisipasi dalam penelitian
-              akademis ini. Anda akan diminta untuk mengevaluasi dan memberikan
-              impresi terhadap 20 karya lukis yang merepresentasikan kekayaan
-              budaya Indonesia.
+              Penelitian mengenai impresi masyarakat terhadap lukisan bertema
+              budaya Indonesia. Amati setiap lukisan dan pilih kata-kata yang
+              paling sesuai dengan kesan Anda. Tidak ada jawaban benar atau
+              salah. Berikan penilaian sesuai impresi pribadi Anda.
             </p>
           </AnimatedContent>
 
@@ -333,24 +337,57 @@ export function HomePage() {
             scale={0.96}
             threshold={0.1}
           >
-            <Button
-              type="button"
-              variant="glassRed2"
-              size="lg"
-              className="group mt-10 px-9 text-base"
-              onClick={goToSurvey}
-            >
-              Mulai Survei
+            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button
+                type="button"
+                variant="glassRed2"
+                size="lg"
+                className="group px-9 text-base"
+                onClick={goToSurvey}
+              >
+                Mulai Survei
 
-              <ArrowRight
-                size={20}
+                <ArrowRight
+                  size={20}
+                  className="
+                    transition-transform
+                    duration-300
+                    group-hover:translate-x-1
+                  "
+                />
+              </Button>
+
+              <a
+                href="#panduan-makna"
                 className="
-                  transition-transform
+                  group
+                  inline-flex
+                  items-center
+                  gap-2
+                  rounded-2xl
+                  border
+                  border-neutral-200/80
+                  bg-white/80
+                  px-6
+                  py-3.5
+                  text-sm
+                  font-semibold
+                  text-neutral-700
+                  shadow-[0_4px_16px_rgba(0,0,0,0.04),inset_0_1px_2px_rgba(255,255,255,0.95)]
+                  transition-all
                   duration-300
-                  group-hover:translate-x-1
+                  hover:-translate-y-0.5
+                  hover:border-red-900/30
+                  hover:bg-white
+                  hover:text-red-900
+                  hover:shadow-[0_8px_24px_rgba(153,27,27,0.08)]
+                  active:scale-[0.98]
                 "
-              />
-            </Button>
+              >
+                <BookOpen size={17} className="text-red-900" />
+                <span>Panduan 38 Impresi</span>
+              </a>
+            </div>
           </AnimatedContent>
 
           {/* Consent */}
@@ -377,6 +414,13 @@ export function HomePage() {
           </AnimatedContent>
 
         </section>
+
+        {/* Soft bottom edge fade to ensure pure seamless white wash into the glossary section */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white to-transparent z-10" />
+        </div>
+
+        {/* Impression Glossary & Meaning Guide Section */}
+        <ImpressionGlossarySection />
       </main>
     </PageShell>
   );

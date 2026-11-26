@@ -7,7 +7,6 @@ import { PageShell } from '@/presentation/layout/site-layout'
 import BrushStrokes from '@/components/decorations/brush-strokes'
 import {
   PaintingDisplay,
-  SurveyProgressBar,
   ImpressionPicker,
   SurveyBottomBar,
   SurveyConfirmationModal,
@@ -59,9 +58,6 @@ export const SurveyPage = React.memo(function SurveyPage({
         />
         <BrushStrokes animated />
 
-        {/* Progress bar */}
-        <SurveyProgressBar current={current} total={total} />
-
         {/* Main content grid */}
         <section
           className="
@@ -73,8 +69,8 @@ export const SurveyPage = React.memo(function SurveyPage({
             items-start
             gap-10
             px-6
-            py-10
-            pb-32
+            py-8
+            pb-36
             lg:grid-cols-[1fr_1fr]
             lg:gap-16
           "

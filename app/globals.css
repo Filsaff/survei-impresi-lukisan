@@ -380,10 +380,10 @@ a:focus-visible,
   }
   
   .brush-strokes-right {
-    right: -400px;
-    bottom: 2%;
+    right: -380px;
+    top: 36%;
   
-    transform: rotate(8deg);
+    transform: rotate(6deg);
   }
 
   .brush-strokes-animated {
@@ -441,6 +441,78 @@ a:focus-visible,
   .brush-strokes path:nth-child(7) {
     stroke-width: 2;
     opacity: 0.45;
+  }
+
+  /* Painterly Canvas Pigment Drift & Brush Sweep Animations */
+  @keyframes pigmentDriftA {
+    0%, 100% {
+      transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+    33% {
+      transform: translate3d(50px, -35px, 0) rotate(3deg) scale(1.08);
+    }
+    66% {
+      transform: translate3d(-40px, 30px, 0) rotate(-2deg) scale(0.96);
+    }
+  }
+
+  @keyframes pigmentDriftB {
+    0%, 100% {
+      transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+    33% {
+      transform: translate3d(-55px, 40px, 0) rotate(-4deg) scale(1.06);
+    }
+    66% {
+      transform: translate3d(35px, -25px, 0) rotate(3deg) scale(0.94);
+    }
+  }
+
+  @keyframes pigmentDriftC {
+    0%, 100% {
+      transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    }
+    50% {
+      transform: translate3d(40px, 45px, 0) rotate(5deg) scale(1.05);
+    }
+  }
+
+  @keyframes brushSweepFlow {
+    0%, 100% {
+      transform: translate3d(0, 0, 0) scaleX(1);
+    }
+    50% {
+      transform: translate3d(30px, -20px, 0) scaleX(1.04);
+    }
+  }
+
+  .animate-pigment-a {
+    animation: pigmentDriftA 26s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .animate-pigment-b {
+    animation: pigmentDriftB 30s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .animate-pigment-c {
+    animation: pigmentDriftC 22s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .animate-brush-sweep {
+    animation: brushSweepFlow 20s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-pigment-a,
+    .animate-pigment-b,
+    .animate-pigment-c,
+    .animate-brush-sweep {
+      animation: none !important;
+    }
   }
 
   .split-highlight {

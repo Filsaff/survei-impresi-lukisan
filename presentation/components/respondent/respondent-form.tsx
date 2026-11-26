@@ -1,6 +1,10 @@
 import * as React from 'react'
-import { ArrowRight } from 'lucide-react'
-import { isRespondentValid, type Respondent } from '@/domain/survey'
+import { AlertCircle, ArrowRight } from 'lucide-react'
+import {
+  EMAIL_LETTERS_DOTS_REGEX,
+  isRespondentValid,
+  type Respondent,
+} from '@/domain/survey'
 import { Button } from '@/components/ui/button'
 
 export interface RespondentFormProps {
@@ -14,6 +18,9 @@ export const RespondentForm = React.memo(function RespondentForm({
   onChange,
   onSubmit,
 }: RespondentFormProps) {
+  const [emailError, setEmailError] = React.useState<string | null>(null)
+  const emailInputRef = React.useRef<HTMLInputElement>(null)
+
   const update = <K extends keyof Respondent>(
     key: K,
     next: Respondent[K],
@@ -24,12 +31,59 @@ export const RespondentForm = React.memo(function RespondentForm({
     })
   }
 
+  const handleAgeChange = (rawAgeText: string) => {
+    const parsedAge = rawAgeText ? Number(rawAgeText) : undefined
+  
+    onChange({
+      ...value,
+      age: parsedAge,
+      allowAdultContent:
+        parsedAge !== undefined && parsedAge >= 18,
+    })
+  }
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const nextEmail = e.target.value
+    update('email', nextEmail)
+
+    // Clear error message if user starts typing a valid format or clears the field
+    if (emailError) {
+      if (!nextEmail.trim() || EMAIL_LETTERS_DOTS_REGEX.test(nextEmail.trim())) {
+        setEmailError(null)
+      }
+    }
+  }
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault()
+
+    // 1. Strict email username format check (letters and dots only)
+    const trimmedEmail = (value.email || '').trim()
+    if (!trimmedEmail || !EMAIL_LETTERS_DOTS_REGEX.test(trimmedEmail)) {
+      setEmailError(
+        'Format email belum sesuai. Nama pengguna email (sebelum @) hanya boleh berupa huruf dan titik tanpa angka atau karakter lain (contoh: nama.lengkap@domain.com).'
+      )
+      emailInputRef.current?.focus()
+      return
+    }
+
+    setEmailError(null)
+
+    // 2. Proceed if all fields are valid
     if (isRespondentValid(value)) {
       onSubmit()
     }
   }
+
+  // The button is clickable once base fields are filled.
+  // If email format is invalid when clicked, handleSubmit intercepts and displays the interactive notification.
+  const isBaseFilled = Boolean(
+    value.name?.trim() &&
+      value.email?.trim() &&
+      value.gender &&
+      value.age &&
+      value.education,
+  )
 
   return (
     <form
@@ -85,6 +139,7 @@ export const RespondentForm = React.memo(function RespondentForm({
 
           <input
             required
+            maxLength={100}
             placeholder="Masukkan nama Anda"
             value={value.name}
             onChange={(e) => update('name', e.target.value)}
@@ -118,32 +173,45 @@ export const RespondentForm = React.memo(function RespondentForm({
           </span>
 
           <input
+            ref={emailInputRef}
             required
             type="email"
-            placeholder="nama@email.com"
+            maxLength={100}
+            placeholder="nama@domain.com"
             value={value.email}
-            onChange={(e) => update('email', e.target.value)}
-            className="
+            onChange={handleEmailChange}
+            className={`
               mt-2
               h-12
               w-full
               rounded-xl
               border
-              border-neutral-200/80
               bg-white/80
               px-4
               text-sm
               text-neutral-900
               outline-none
               shadow-[inset_0_1px_2px_rgba(255,255,255,0.85)]
-              transition-colors
+              transition-all
               placeholder:text-neutral-400
-              focus:border-neutral-400
-              focus:bg-white
-              focus:ring-2
-              focus:ring-red-900/10
-            "
+              ${
+                emailError
+                  ? 'border-red-400 ring-2 ring-red-500/20 focus:border-red-500 focus:ring-red-500/30'
+                  : 'border-neutral-200/80 focus:border-neutral-400 focus:bg-white focus:ring-2 focus:ring-red-900/10'
+              }
+            `}
           />
+
+          {/* Interactive Error Notification if email format is invalid */}
+          {emailError && (
+            <div
+              role="alert"
+              className="mt-2 flex items-start gap-2 rounded-xl border border-red-200/90 bg-red-50/90 px-3.5 py-2.5 text-xs text-red-700 shadow-sm animate-in fade-in slide-in-from-top-1 duration-200"
+            >
+              <AlertCircle className="size-4 shrink-0 mt-0.5 text-red-600" />
+              <span className="leading-relaxed">{emailError}</span>
+            </div>
+          )}
         </label>
 
         {/* Gender + Age */}
@@ -188,14 +256,10 @@ export const RespondentForm = React.memo(function RespondentForm({
               required
               type="number"
               min="1"
+              max="120"
               placeholder="Contoh: 25"
               value={value.age ?? ''}
-              onChange={(e) =>
-                update(
-                  'age',
-                  e.target.value ? Number(e.target.value) : undefined,
-                )
-              }
+              onChange={(e) => handleAgeChange(e.target.value)}
               className="
                 mt-2
                 h-12
@@ -263,12 +327,66 @@ export const RespondentForm = React.memo(function RespondentForm({
           </select>
         </label>
 
+        {/* Adult / Nude Painting Content Toggle (Minimal Switch, 18+ Only) */}
+        {value.age && value.age >= 18 && (
+          <label
+            className="
+              flex cursor-pointer items-center justify-between gap-4
+              rounded-xl border border-neutral-200/80 bg-white/70 px-4 py-3
+              shadow-[inset_0_1px_2px_rgba(255,255,255,0.85)]
+              transition-all duration-300 hover:border-neutral-300 hover:bg-white
+              animate-in fade-in slide-in-from-top-1
+            "
+          >
+            <div className="flex flex-col select-none">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold tracking-wider text-neutral-700">
+                  Sertakan Lukisan Nude
+                </span>
+                <span className="rounded px-1.5 py-0.5 text-[10px] font-bold text-red-900 bg-red-900/10">
+                  18+
+                </span>
+              </div>
+              <p className="mt-0.5 text-[11px] text-neutral-500">
+                Izin menampilkan karya bertema nude art
+              </p>
+            </div>
+
+            {/* Hidden native checkbox for keyboard and touch accessibility */}
+            <input
+              type="checkbox"
+              name="allowAdultContent"
+              checked={Boolean(value.allowAdultContent)}
+              onChange={(e) => update('allowAdultContent', e.target.checked)}
+              className="sr-only"
+            />
+
+            {/* Visual On/Off Switch */}
+            <div
+              aria-hidden="true"
+              className={`
+                relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent
+                transition-colors duration-200 ease-in-out
+                ${value.allowAdultContent ? 'bg-red-900' : 'bg-neutral-300/80'}
+              `}
+            >
+              <span
+                className={`
+                  inline-block size-5 transform rounded-full bg-white shadow-md ring-0
+                  transition duration-200 ease-in-out
+                  ${value.allowAdultContent ? 'translate-x-5' : 'translate-x-0'}
+                `}
+              />
+            </div>
+          </label>
+        )}
+
         {/* CTA */}
         <Button
           type="submit"
           variant="glassRed2"
           size="lg"
-          disabled={!isRespondentValid(value)}
+          disabled={!isBaseFilled}
           className="mt-2 w-full text-base font-medium"
         >
           Mulai Survei

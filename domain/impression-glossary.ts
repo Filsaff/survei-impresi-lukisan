@@ -1,0 +1,513 @@
+export type ImpressionCategory =
+  | 'semua'
+  | 'ketenangan'
+  | 'energi'
+  | 'estetika'
+  | 'suasana'
+  | 'karakter'
+
+export interface ImpressionGlossaryItem {
+  id: string
+  number: number
+  name: string
+  meaning: string
+  category: ImpressionCategory
+  categoryLabel: string
+  keywords: string[]
+}
+
+export interface WordComparison {
+  id: string
+  title: string
+  wordA: string
+  descA: string
+  wordB: string
+  descB: string
+}
+
+export interface GlossaryPrinciple {
+  id: string
+  title: string
+  description: string
+}
+
+export const GLOSSARY_CATEGORIES: { id: ImpressionCategory; label: string }[] = [
+  { id: 'semua', label: 'Semua (38)' },
+  { id: 'ketenangan', label: 'Ketenangan & Batin' },
+  { id: 'energi', label: 'Energi & Emosi' },
+  { id: 'estetika', label: 'Estetika & Karakter' },
+  { id: 'suasana', label: 'Suasana Hati' },
+]
+
+export const GLOSSARY_PRINCIPLES: GlossaryPrinciple[] = [
+  {
+    id: 'principle-1',
+    title: 'Kesan Visual, Bukan Maksud Mutlak',
+    description:
+      'Makna dijelaskan dalam konteks kesan visual yang ditimbulkan lukisan saat Anda memandangnya, bukan penilaian pasti terhadap maksud atau niat awal pelukis.',
+  },
+  {
+    id: 'principle-2',
+    title: 'Subjektif & Tanpa Benar-Salah',
+    description:
+      'Setiap pengamat memiliki latar rasa dan kepekaan emosional yang unik. Pilihlah kata impresi berdasarkan respon pribadi Anda—tidak ada jawaban benar atau salah.',
+  },
+  {
+    id: 'principle-3',
+    title: 'Multi-Impresi Diperbolehkan',
+    description:
+      'Satu lukisan yang kaya detail atau bernuansa kompleks dapat menimbulkan lebih dari satu impresi sekaligus. Anda bebas memilih beberapa kata yang selaras.',
+  },
+]
+
+export const GLOSSARY_IMPRESSIONS: ImpressionGlossaryItem[] = [
+  {
+    id: 'impression-1',
+    number: 1,
+    name: 'Tenang',
+    meaning: 'Memberi kesan damai, tenteram, stabil, dan tidak tergesa-gesa.',
+    category: 'ketenangan',
+    categoryLabel: 'Ketenangan & Batin',
+    keywords: ['damai', 'tenteram', 'stabil', 'hening', 'teduh'],
+  },
+  {
+    id: 'impression-2',
+    number: 2,
+    name: 'Membara',
+    meaning: 'Memberi kesan energi atau emosi yang menyala kuat, intens, dan penuh dorongan.',
+    category: 'energi',
+    categoryLabel: 'Energi & Emosi',
+    keywords: ['energi', 'menyala', 'intens', 'dorongan', 'semangat'],
+  },
+  {
+    id: 'impression-3',
+    number: 3,
+    name: 'Bingung',
+    meaning: 'Memberi kesan tidak jelas atau sulit dipahami, sehingga pengamat bertanya-tanya tentang situasi atau maknanya.',
+    category: 'suasana',
+    categoryLabel: 'Suasana Hati',
+    keywords: ['tidak jelas', 'tanya', 'situasi', 'makna', 'rancu'],
+  },
+  {
+    id: 'impression-4',
+    number: 4,
+    name: 'Melankolis',
+    meaning: 'Memberi suasana sendu dan reflektif, seperti kesedihan yang tenang atau kerinduan mendalam.',
+    category: 'suasana',
+    categoryLabel: 'Suasana Hati',
+    keywords: ['sendu', 'reflektif', 'rindu', 'kenangan', 'sayu'],
+  },
+  {
+    id: 'impression-5',
+    number: 5,
+    name: 'Malu',
+    meaning: 'Memberi kesan tersipu, sungkan, atau ingin menyembunyikan diri.',
+    category: 'suasana',
+    categoryLabel: 'Suasana Hati',
+    keywords: ['tersipu', 'sungkan', 'sembunyi', 'canggung'],
+  },
+  {
+    id: 'impression-6',
+    number: 6,
+    name: 'Kejam',
+    meaning: 'Memberi kesan keras, tidak berbelas kasih, atau menyiratkan perlakuan yang menyakitkan.',
+    category: 'energi',
+    categoryLabel: 'Energi & Emosi',
+    keywords: ['keras', 'tanpa belas kasih', 'sakit', 'tegas', 'kelam'],
+  },
+  {
+    id: 'impression-7',
+    number: 7,
+    name: 'Marah',
+    meaning: 'Memberi kesan kemarahan, pertentangan, atau emosi yang memuncak.',
+    category: 'energi',
+    categoryLabel: 'Energi & Emosi',
+    keywords: ['kemarahan', 'pertentangan', 'puncak', 'gejolak'],
+  },
+  {
+    id: 'impression-8',
+    number: 8,
+    name: 'Suci',
+    meaning: 'Memberi kesan murni, bersih secara batin, atau sakral.',
+    category: 'ketenangan',
+    categoryLabel: 'Ketenangan & Batin',
+    keywords: ['murni', 'bersih batin', 'sakral', 'kudus'],
+  },
+  {
+    id: 'impression-9',
+    number: 9,
+    name: 'Cemburu',
+    meaning: 'Memberi kesan iri atau takut kehilangan perhatian maupun kasih sayang.',
+    category: 'suasana',
+    categoryLabel: 'Suasana Hati',
+    keywords: ['iri', 'kehilangan', 'perhatian', 'kasih sayang'],
+  },
+  {
+    id: 'impression-10',
+    number: 10,
+    name: 'Sedih',
+    meaning: 'Memberi kesan duka, kehilangan, kekecewaan, atau suasana hati yang muram.',
+    category: 'suasana',
+    categoryLabel: 'Suasana Hati',
+    keywords: ['duka', 'kehilangan', 'kecewa', 'muram', 'pilu'],
+  },
+  {
+    id: 'impression-11',
+    number: 11,
+    name: 'Ikhlas',
+    meaning: 'Memberi kesan menerima keadaan dengan lapang dada tanpa menuntut balasan.',
+    category: 'ketenangan',
+    categoryLabel: 'Ketenangan & Batin',
+    keywords: ['lapang dada', 'menerima', 'tulus', 'pasrah'],
+  },
+  {
+    id: 'impression-12',
+    number: 12,
+    name: 'Misterius',
+    meaning: 'Memberi kesan menyimpan rahasia atau belum mengungkap seluruh maknanya, sehingga memancing rasa penasaran.',
+    category: 'estetika',
+    categoryLabel: 'Estetika & Karakter',
+    keywords: ['rahasia', 'penasaran', 'samar', 'teka-teki'],
+  },
+  {
+    id: 'impression-13',
+    number: 13,
+    name: 'Sopan',
+    meaning: 'Memberi kesan santun, tertib, dan menghormati orang lain.',
+    category: 'karakter',
+    categoryLabel: 'Estetika & Karakter',
+    keywords: ['santun', 'tertib', 'hormat', 'beradab'],
+  },
+  {
+    id: 'impression-14',
+    number: 14,
+    name: 'Angkuh',
+    meaning: 'Memberi kesan tinggi hati, dingin, menjaga jarak, atau seolah merasa lebih tinggi daripada yang lain.',
+    category: 'karakter',
+    categoryLabel: 'Estetika & Karakter',
+    keywords: ['tinggi hati', 'dingin', 'jarak', 'superior'],
+  },
+  {
+    id: 'impression-15',
+    number: 15,
+    name: 'Cinta',
+    meaning: 'Memberi kesan kasih sayang, kepedulian, kedekatan emosional, atau keterikatan.',
+    category: 'energi',
+    categoryLabel: 'Energi & Emosi',
+    keywords: ['kasih sayang', 'peduli', 'kedekatan', 'ikatan'],
+  },
+  {
+    id: 'impression-16',
+    number: 16,
+    name: 'Indah',
+    meaning: 'Memberi kesan menyenangkan secara estetis melalui warna, bentuk, komposisi, detail, atau keharmonisan.',
+    category: 'estetika',
+    categoryLabel: 'Estetika & Karakter',
+    keywords: ['estetis', 'harmoni', 'warna', 'komposisi', 'elok'],
+  },
+  {
+    id: 'impression-17',
+    number: 17,
+    name: 'Segan',
+    meaning: 'Memberi kesan sungkan atau hormat yang membuat seseorang berhati-hati untuk bertindak atau berbicara.',
+    category: 'karakter',
+    categoryLabel: 'Estetika & Karakter',
+    keywords: ['sungkan', 'hormat', 'hati-hati', 'hormat'],
+  },
+  {
+    id: 'impression-18',
+    number: 18,
+    name: 'Menjijikkan',
+    meaning: 'Memberi kesan memicu rasa jijik, muak, atau penolakan kuat.',
+    category: 'suasana',
+    categoryLabel: 'Suasana Hati',
+    keywords: ['jijik', 'muak', 'penolakan', 'enggan'],
+  },
+  {
+    id: 'impression-19',
+    number: 19,
+    name: 'Romantis',
+    meaning: 'Memberi kesan kemesraan, kasih sayang, kerinduan, atau hubungan yang penuh perasaan.',
+    category: 'energi',
+    categoryLabel: 'Energi & Emosi',
+    keywords: ['mesra', 'rindu', 'perasaan', 'hangat'],
+  },
+  {
+    id: 'impression-20',
+    number: 20,
+    name: 'Nekad',
+    meaning: 'Memberi kesan mengambil tindakan berisiko dengan sedikit pertimbangan atau tetap bertindak meski menghadapi bahaya.',
+    category: 'energi',
+    categoryLabel: 'Energi & Emosi',
+    keywords: ['berisiko', 'tanpa ragu', 'bahaya', 'spontan'],
+  },
+  {
+    id: 'impression-21',
+    number: 21,
+    name: 'Sabar',
+    meaning: 'Memberi kesan mampu menahan diri atau menghadapi keadaan sulit tanpa mudah terpancing.',
+    category: 'ketenangan',
+    categoryLabel: 'Ketenangan & Batin',
+    keywords: ['menahan diri', 'tabah', 'teguh', 'tidak terpancing'],
+  },
+  {
+    id: 'impression-22',
+    number: 22,
+    name: 'Sensual',
+    meaning: 'Memberi kesan yang menonjolkan daya tarik indrawi atau fisik, misalnya melalui bentuk, tekstur, atau gerak.',
+    category: 'estetika',
+    categoryLabel: 'Estetika & Karakter',
+    keywords: ['indrawi', 'daya tarik', 'tekstur', 'lekuk'],
+  },
+  {
+    id: 'impression-23',
+    number: 23,
+    name: 'Menakutkan',
+    meaning: 'Memberi kesan mengancam atau menimbulkan rasa takut, waspada, dan tidak aman.',
+    category: 'suasana',
+    categoryLabel: 'Suasana Hati',
+    keywords: ['mengancam', 'takut', 'waspada', 'mencekam'],
+  },
+  {
+    id: 'impression-24',
+    number: 24,
+    name: 'Resah',
+    meaning: 'Memberi kesan gelisah, tidak tenteram, atau sulit merasa nyaman; dapat terasa sebagai suasana yang penuh ketegangan.',
+    category: 'suasana',
+    categoryLabel: 'Suasana Hati',
+    keywords: ['gelisah', 'tegang', 'tidak nyaman', 'khawatir'],
+  },
+  {
+    id: 'impression-25',
+    number: 25,
+    name: 'Letih',
+    meaning: 'Memberi kesan lelah, lesu, kehabisan tenaga, atau membutuhkan istirahat.',
+    category: 'suasana',
+    categoryLabel: 'Suasana Hati',
+    keywords: ['lelah', 'lesu', 'istirahat', 'lunglai'],
+  },
+  {
+    id: 'impression-26',
+    number: 26,
+    name: 'Sepi',
+    meaning: 'Memberi kesan kesendirian, kesunyian, atau suasana yang terasa kosong dan minim interaksi.',
+    category: 'ketenangan',
+    categoryLabel: 'Ketenangan & Batin',
+    keywords: ['kesendirian', 'sunyi', 'kosong', 'hening'],
+  },
+  {
+    id: 'impression-27',
+    number: 27,
+    name: 'Gembira',
+    meaning: 'Memberi kesan bahagia, ceria, dan penuh kegembiraan.',
+    category: 'energi',
+    categoryLabel: 'Energi & Emosi',
+    keywords: ['bahagia', 'ceria', 'kegembiraan', 'senang'],
+  },
+  {
+    id: 'impression-28',
+    number: 28,
+    name: 'Penuh Harapan',
+    meaning: 'Memberi kesan optimistis bahwa keadaan dapat membaik atau sesuatu yang baik masih mungkin terjadi.',
+    category: 'ketenangan',
+    categoryLabel: 'Ketenangan & Batin',
+    keywords: ['optimis', 'masa depan', 'cahaya', 'harapan'],
+  },
+  {
+    id: 'impression-29',
+    number: 29,
+    name: 'Heroik',
+    meaning: 'Memberi kesan kepahlawanan, pengorbanan, atau keberanian dalam menghadapi tantangan.',
+    category: 'energi',
+    categoryLabel: 'Energi & Emosi',
+    keywords: ['pahlawan', 'pengorbanan', 'patriotik', 'tangguh'],
+  },
+  {
+    id: 'impression-30',
+    number: 30,
+    name: 'Spiritual',
+    meaning: 'Memberi kesan berkaitan dengan batin, kerohanian, pencarian makna, atau hubungan dengan sesuatu yang lebih besar dari diri.',
+    category: 'ketenangan',
+    categoryLabel: 'Ketenangan & Batin',
+    keywords: ['kerohanian', 'batin', 'makna hidup', 'transenden'],
+  },
+  {
+    id: 'impression-31',
+    number: 31,
+    name: 'Berwibawa',
+    meaning: 'Memberi kesan bermartabat dan memiliki kewibawaan sehingga menimbulkan rasa hormat.',
+    category: 'karakter',
+    categoryLabel: 'Estetika & Karakter',
+    keywords: ['martabat', 'wibawa', 'respek', 'kharisma'],
+  },
+  {
+    id: 'impression-32',
+    number: 32,
+    name: 'Anggun',
+    meaning: 'Memberi kesan luwes, halus, dan elok dalam gerak, bentuk, atau pembawaan.',
+    category: 'estetika',
+    categoryLabel: 'Estetika & Karakter',
+    keywords: ['luwes', 'halus', 'elok', 'gemulai'],
+  },
+  {
+    id: 'impression-33',
+    number: 33,
+    name: 'Elegan',
+    meaning: 'Memberi kesan berkelas, rapi, dan memiliki kehalusan atau kecanggihan.',
+    category: 'estetika',
+    categoryLabel: 'Estetika & Karakter',
+    keywords: ['berkelas', 'rapi', 'canggih', 'anggun modern'],
+  },
+  {
+    id: 'impression-34',
+    number: 34,
+    name: 'Megah',
+    meaning: 'Memberi kesan besar, agung, monumental, atau mengesankan karena skala maupun detailnya.',
+    category: 'estetika',
+    categoryLabel: 'Estetika & Karakter',
+    keywords: ['monumental', 'agung', 'skala besar', 'megah'],
+  },
+  {
+    id: 'impression-35',
+    number: 35,
+    name: 'Berani',
+    meaning: 'Memberi kesan siap menghadapi tantangan, bahaya, atau ketidakpastian.',
+    category: 'energi',
+    categoryLabel: 'Energi & Emosi',
+    keywords: ['tantangan', 'siap', 'tegar', 'keberanian'],
+  },
+  {
+    id: 'impression-36',
+    number: 36,
+    name: 'Mencolok',
+    meaning: 'Memberi kesan sangat menonjol dan segera menarik perhatian karena warna, ukuran, bentuk, atau posisinya.',
+    category: 'estetika',
+    categoryLabel: 'Estetika & Karakter',
+    keywords: ['menonjol', 'fokus', 'kontras', 'kontras tinggi'],
+  },
+  {
+    id: 'impression-37',
+    number: 37,
+    name: 'Bagai Mimpi',
+    meaning: 'Memberi kesan seperti berada dalam mimpi: tidak biasa, sureal, mengambang, atau tidak realistis.',
+    category: 'estetika',
+    categoryLabel: 'Estetika & Karakter',
+    keywords: ['sureal', 'mengambang', 'mimpi', 'fantasi'],
+  },
+  {
+    id: 'impression-38',
+    number: 38,
+    name: 'Mempesona',
+    meaning: 'Memberi kesan sangat memikat dan menarik perhatian pengamat.',
+    category: 'estetika',
+    categoryLabel: 'Estetika & Karakter',
+    keywords: ['memikat', 'daya tarik', 'pesona', 'takjub'],
+  },
+]
+
+export const WORD_COMPARISONS: WordComparison[] = [
+  {
+    id: 'comp-1',
+    title: 'Sedih vs. Melankolis',
+    wordA: 'Sedih',
+    descA: 'Lebih langsung menggambarkan duka, kehilangan, atau kekecewaan emosional.',
+    wordB: 'Melankolis',
+    descB: 'Menggambarkan suasana sendu yang cenderung tenang, reflektif, atau kerinduan yang puitis.',
+  },
+  {
+    id: 'comp-2',
+    title: 'Resah vs. Bingung',
+    wordA: 'Resah',
+    descA: 'Menggambarkan kegelisahan batin, ketidaktenteraman, atau ketegangan emosi.',
+    wordB: 'Bingung',
+    descB: 'Menggambarkan kesan tidak jelas atau sulit dipahami dari situasi karya lukis.',
+  },
+  {
+    id: 'comp-3',
+    title: 'Misterius vs. Bagai Mimpi',
+    wordA: 'Misterius',
+    descA: 'Terasa menyimpan rahasia, terselubung, atau belum terjelaskan secara kasat mata.',
+    wordB: 'Bagai Mimpi',
+    descB: 'Terasa sureal, tidak biasa, atau melayang seperti adegan di alam mimpi.',
+  },
+  {
+    id: 'comp-4',
+    title: 'Indah vs. Mempesona',
+    wordA: 'Indah',
+    descA: 'Menekankan keindahan estetis objektif melalui harmoni warna, bentuk, dan komposisi.',
+    wordB: 'Mempesona',
+    descB: 'Menekankan daya pikat magnetis yang kuat dan kemampuan langsung menyita perhatian.',
+  },
+  {
+    id: 'comp-5',
+    title: 'Anggun vs. Elegan',
+    wordA: 'Anggun',
+    descA: 'Menekankan keluwesan, kelembutan, dan kehalusan gerak atau pembawaan tradisi.',
+    wordB: 'Elegan',
+    descB: 'Menekankan kesan berkelas, rapi, presisi, serta kecanggihan visual.',
+  },
+  {
+    id: 'comp-6',
+    title: 'Berani vs. Nekad',
+    wordA: 'Berani',
+    descA: 'Siap menghadapi tantangan, bahaya, atau ketidakpastian dengan penuh kesadaran.',
+    wordB: 'Nekad',
+    descB: 'Bertindak dengan sedikit pertimbangan atau tetap menerobos walau menghadapi bahaya besar.',
+  },
+  {
+    id: 'comp-7',
+    title: 'Angkuh vs. Berwibawa',
+    wordA: 'Angkuh',
+    descA: 'Memberi kesan tinggi hati, dingin, menjaga jarak, atau memandang rendah sekitarnya.',
+    wordB: 'Berwibawa',
+    descB: 'Bermartabat luhur dan memancarkan kharisma yang menuntut rasa hormat tanpa merendahkan.',
+  },
+  {
+    id: 'comp-8',
+    title: 'Tenang vs. Sabar',
+    wordA: 'Tenang',
+    descA: 'Menggambarkan suasana lingkungan atau batin yang damai, tenteram, dan stabil.',
+    wordB: 'Sabar',
+    descB: 'Menggambarkan daya tahan mental atau kemampuan menahan diri dalam menghadapi tekanan.',
+  },
+  {
+    id: 'comp-9',
+    title: 'Marah vs. Membara',
+    wordA: 'Marah',
+    descA: 'Secara spesifik menggambarkan emosi kemarahan, perselisihan, atau kekesalan memuncak.',
+    wordB: 'Membara',
+    descB: 'Menggambarkan intensitas energi yang menyala kuat dan membara; tidak selalu berupa kemarahan.',
+  },
+  {
+    id: 'comp-10',
+    title: 'Suci vs. Spiritual',
+    wordA: 'Suci',
+    descA: 'Menekankan kemurnian mutlak, kebersihan dari cela, atau nuansa sakralitas religi.',
+    wordB: 'Spiritual',
+    descB: 'Berkaitan dengan pengalaman batiniah, perenungan kerohanian, dan koneksi dengan semesta.',
+  },
+  {
+    id: 'comp-11',
+    title: 'Segan vs. Malu',
+    wordA: 'Segan',
+    descA: 'Lebih dekat dengan rasa hormat tinggi atau sungkan yang membuat seseorang berhati-hati.',
+    wordB: 'Malu',
+    descB: 'Lebih dekat dengan rasa canggung, tersipu, atau keinginan menyembunyikan diri.',
+  },
+  {
+    id: 'comp-12',
+    title: 'Cinta vs. Romantis',
+    wordA: 'Cinta',
+    descA: 'Menekankan kasih sayang mendalam, kepedulian batin, atau keterikatan antarmanusia.',
+    wordB: 'Romantis',
+    descB: 'Menekankan suasana kemesraan, suasana puitis kerinduan, atau keintiman perasaan.',
+  },
+  {
+    id: 'comp-13',
+    title: 'Mencolok vs. Megah',
+    wordA: 'Mencolok',
+    descA: 'Paling kontras dan segera menarik perhatian visual karena warna, ukuran, atau posisinya.',
+    wordB: 'Megah',
+    descB: 'Terasa agung, berdimensi monumental, dan menakjubkan karena kemewahan atau skalanya.',
+  },
+]

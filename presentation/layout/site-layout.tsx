@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
 import { ArrowUpRight } from 'lucide-react'
@@ -100,30 +101,36 @@ export function SiteHeader({
           {/* Logo */}
           <div
             className="
-              flex size-10 shrink-0
+              relative flex size-10 shrink-0
               items-center justify-center
+              overflow-hidden
               rounded-full
-              bg-red-900
-              text-white
+              border border-neutral-200/80
+              bg-white
               shadow-sm
               transition-all duration-300
               group-hover:rotate-[-3deg]
               group-hover:scale-105
             "
           >
-            <span className="text-sm font-bold tracking-tight">
-              BR
-            </span>
+            <Image
+              src="/logo.png"
+              alt="Logo Abstract S"
+              width={40}
+              height={40}
+              className="size-full object-cover"
+              priority
+            />
           </div>
 
           {/* Brand Text */}
           <div className="hidden sm:block">
             <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-red-800">
-              Budaya Riset
+              STUDI PENELITIAN
             </p>
 
             <p className="mt-0.5 text-sm font-medium tracking-tight text-neutral-800">
-              Survei Impresi Lukisan
+              Survei Impresi Lukisan Budaya Indonesia
             </p>
           </div>
         </Link>
@@ -250,34 +257,39 @@ export function SiteFooter() {
 
                 <div
                   className="
-                    flex size-10
+                    relative flex size-10 shrink-0
                     items-center justify-center
+                    overflow-hidden
                     rounded-full
-                    bg-red-900
-                    text-sm font-bold
-                    text-white
+                    border border-neutral-200/80
+                    bg-white
                     shadow-sm
                   "
                 >
-                  BR
+                  <Image
+                    src="/logo.png"
+                    alt="Logo Abstract S"
+                    width={40}
+                    height={40}
+                    className="size-full object-cover"
+                  />
                 </div>
 
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.25em] text-red-800">
-                    Budaya Riset
+                    STUDI PENELITIAN
                   </p>
 
                   <h3 className="mt-1 font-serif text-xl text-neutral-900">
-                    Survei Impresi Lukisan
+                    Survei Impresi Lukisan Budaya Indonesia
                   </h3>
                 </div>
 
               </div>
 
               <p className="mt-5 max-w-sm text-sm leading-7 text-neutral-500">
-                Penelitian mengenai impresi masyarakat terhadap
-                karya lukis yang merepresentasikan kekayaan budaya
-                Indonesia.
+                Penelitian mengenai impresi masyarakat terhadap lukisan bertema
+                budaya Indonesia.
               </p>
             </div>
 
@@ -306,37 +318,26 @@ export function SiteFooter() {
 
               <div className="flex flex-col gap-3">
                 <b className="mb-1 text-[10px] font-semibold tracking-[0.2em] text-neutral-400">
-                  INFORMASI
+                  KONTAK
                 </b>
 
-                <Link
-                  href="#informasi"
+                <a
+                  href="https://instagram.com/filsafaelang"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-sm text-neutral-600 transition-colors hover:text-red-800"
                 >
-                  Tentang Penelitian
-                </Link>
-
-                <Link
-                  href="#kontak"
-                  className="text-sm text-neutral-600 transition-colors hover:text-red-800"
-                >
-                  Kontak
-                </Link>
+                  Instagram
+                </a>
               </div>
-
             </div>
-
           </div>
-
           {/* Divider */}
           <div className="my-8 h-px bg-neutral-200/60" />
-
           {/* Bottom */}
           <div className="flex flex-col justify-between gap-3 text-xs text-neutral-400 md:flex-row">
-
             <p>
-              © 2026 Cultural Research Initiative.
-              All rights reserved.
+              © 2026 Penelitian Akademis.
             </p>
 
             <p>

@@ -26,6 +26,10 @@ build/
 dist/
 *.tsbuildinfo
 
+# Local backups and snapshots
+backups/
+database/backups/
+
 # Environment variables (NEVER commit secrets)
 .env
 .env*.local
