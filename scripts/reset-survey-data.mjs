@@ -89,8 +89,15 @@ async function resetDatabase() {
 
     // Clean legacy backup tables if they exist
     await client.query(`
-      TRUNCATE TABLE legacy_survey_answers;
-      TRUNCATE TABLE backup_respondents_pre_dedup;
+      DO $$
+      BEGIN
+        IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'legacy_survey_answers') THEN
+          TRUNCATE TABLE legacy_survey_answers;
+        END IF;
+        IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'backup_respondents_pre_dedup') THEN
+          TRUNCATE TABLE backup_respondents_pre_dedup;
+        END IF;
+      END $$;
     `);
 
     await client.query('COMMIT');
@@ -117,10 +124,14 @@ async function resetDatabase() {
   ];
 
   for (const t of verifyTables) {
-    const res = await pool.query(`SELECT count(*) FROM "${t}"`);
-    const count = parseInt(res.rows[0].count, 10);
-    const label = (t === 'paintings' || t === 'impressions') ? '(Master Data Intact)' : '(Cleaned / 0 Respondents)';
-    console.log(`   - ${t.padEnd(28)}: ${count} rows ${label}`);
+    try {
+      const res = await pool.query(`SELECT count(*) FROM "${t}"`);
+      const count = parseInt(res.rows[0].count, 10);
+      const label = (t === 'paintings' || t === 'impressions') ? '(Master Data Intact)' : '(Cleaned / 0 Respondents)';
+      console.log(`   - ${t.padEnd(28)}: ${count} rows ${label}`);
+    } catch {
+      // Table does not exist in production RDS, skip safely
+    }
   }
 
   console.log('\n======================================================');

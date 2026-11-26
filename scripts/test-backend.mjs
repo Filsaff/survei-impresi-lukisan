@@ -16,8 +16,9 @@ for (const line of envContent.split('\n')) {
 process.env.DATABASE_URL = dbUrl;
 
 const isSsl = dbUrl.includes('rds.amazonaws.com') || dbUrl.includes('supabase') || dbUrl.includes('sslmode=require');
+const cleanDbUrl = dbUrl.replace(/[?&]sslmode=[^&]+/g, '').replace(/\?$/, '');
 const pool = new Pool({
-  connectionString: dbUrl,
+  connectionString: cleanDbUrl,
   ssl: isSsl ? { rejectUnauthorized: false } : undefined,
 });
 
