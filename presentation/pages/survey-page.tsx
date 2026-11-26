@@ -18,6 +18,7 @@ export interface SurveyPageProps {
   total: number
   painting: SurveyPainting
   selected: string[]
+  isSaving?: boolean
   onToggle: (impressionId: string) => void
   onBack: () => void
   onFinish: () => void
@@ -28,6 +29,7 @@ export const SurveyPage = React.memo(function SurveyPage({
   total,
   painting,
   selected,
+  isSaving = false,
   onToggle,
   onBack,
   onFinish,
@@ -91,6 +93,7 @@ export const SurveyPage = React.memo(function SurveyPage({
           current={current}
           total={total}
           canProceed={selected.length > 0}
+          isSaving={isSaving}
           onBack={onBack}
           onNext={onFinish}
         />

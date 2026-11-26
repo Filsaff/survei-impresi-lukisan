@@ -117,6 +117,7 @@ export default function Page() {
   const [confirming, setConfirming] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [isSaving, setIsSaving] = useState(false)
 
   const [alertModal, setAlertModal] = useState<AlertModalState>({
     isOpen: false,
@@ -419,6 +420,7 @@ export default function Page() {
     if (!isUnchanged && currentItem.sessionPaintingId) {
       try {
         isSavingRef.current = true
+        setIsSaving(true)
         const saveResult = await surveyRepository.saveAnswer({
           sessionId: session.survey.id,
           sessionPaintingId: currentItem.sessionPaintingId,
@@ -554,6 +556,7 @@ export default function Page() {
         return
       } finally {
         isSavingRef.current = false
+        setIsSaving(false)
       }
     }
 
@@ -651,6 +654,7 @@ export default function Page() {
         }
         painting={painting}
         selected={selected}
+        isSaving={isSaving}
         onToggle={handleToggle}
         onBack={
           handleBack
